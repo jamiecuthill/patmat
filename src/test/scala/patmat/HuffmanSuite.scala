@@ -18,6 +18,8 @@ class HuffmanSuite extends FunSuite {
     new TestTrees {
       assert(weight(t1) === 5)
     }
+
+    assert(weight(Leaf('b', 2)) === 2)
   }
 
   test("chars of a larger tree") {
@@ -28,6 +30,14 @@ class HuffmanSuite extends FunSuite {
 
   test("string2chars(\"hello, world\")") {
     assert(string2Chars("hello, world") === List('h', 'e', 'l', 'l', 'o', ',', ' ', 'w', 'o', 'r', 'l', 'd'))
+  }
+
+  test("times") {
+    assert(times(List('e', 'e', 'c', 'e')) === List(('e', 3), ('c', 1)))
+  }
+
+  test("create code tree") {
+    assert(createCodeTree(List('a', 'a', 'b', 'c')) === Leaf('a', 2))
   }
 
   test("makeOrderedLeafList for some frequency table") {
