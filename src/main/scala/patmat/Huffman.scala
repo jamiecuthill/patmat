@@ -77,9 +77,19 @@ object Huffman {
    *       println("integer is  : "+ theInt)
    *   }
    */
-  def times(chars: List[Char]): List[(Char, Int)] = chars match {
-    case Nil => Nil
-    case head :: tail => (head, chars.count(_ == head)) :: times(tail.filterNot(_ == head))
+  def times(chars: List[Char]): List[(Char, Int)] = {
+    def acc(char: Char, freq: List[(Char, Int)]): List[(Char, Int)] = freq match {
+      case List() => List((char, 1))
+      case head :: tail =>
+        if (head._1 == char)
+          (char, head._2 + 1) :: tail
+        else
+          head :: acc(char, tail)
+    }
+    chars match {
+      case List() => List()
+      case head :: tail => acc(head, times(tail))
+    }
   }
 
   /**
@@ -89,12 +99,24 @@ object Huffman {
    * head of the list should have the smallest weight), where the weight
    * of a leaf is the frequency of the character.
    */
-  def makeOrderedLeafList(freqs: List[(Char, Int)]): List[Leaf] = ???
+  def makeOrderedLeafList(freqs: List[(Char, Int)]): List[Leaf] = {
+    def insert(leaf: Leaf, list: List[Leaf]): List[Leaf] = list match {
+      case List() => List(leaf)
+      case head :: tail => if (leaf.weight <= head.weight) leaf :: list else head :: insert(leaf, tail)
+    }
+    freqs match {
+      case List() => List()
+      case head :: tail => insert(Leaf(head._1, head._2), makeOrderedLeafList(tail))
+    }
+  }
 
   /**
    * Checks whether the list `trees` contains only one single code tree.
    */
-  def singleton(trees: List[CodeTree]): Boolean = ???
+  def singleton(trees: List[CodeTree]): Boolean = trees match {
+    case List() => false
+    case head :: tail => if ()
+  }
 
   /**
    * The parameter `trees` of this function is a list of code trees ordered

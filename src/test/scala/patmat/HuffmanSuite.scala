@@ -6,6 +6,8 @@ import org.junit.runner.RunWith
 import org.scalatest.junit.JUnitRunner
 
 import patmat.Huffman._
+import patmat.Huffman.Leaf
+import patmat.Huffman.Fork
 
 @RunWith(classOf[JUnitRunner])
 class HuffmanSuite extends FunSuite {
@@ -33,7 +35,13 @@ class HuffmanSuite extends FunSuite {
   }
 
   test("times") {
-    assert(times(List('e', 'e', 'c', 'e')) === List(('e', 3), ('c', 1)))
+    val t: List[(Char, Int)] = times(List('a', 'b', 'a', 'b', 'c', 'c', 'c', 'd', 'e'))
+
+    assert(t.contains('a', 2))
+    assert(t.contains('b', 2))
+    assert(t.contains('c', 3))
+    assert(t.contains('d', 1))
+    assert(t.contains('e', 1))
   }
 
   test("create code tree") {
