@@ -30,6 +30,18 @@ class HuffmanSuite extends FunSuite {
     }
   }
 
+  test("empty list is not singleton") {
+    assert(!singleton(List()))
+  }
+
+  test("list with one item is singleton") {
+    assert(singleton(List(Leaf('c', 1))))
+  }
+
+  test("list with two items is not a singleton") {
+    assert(!singleton(List(Leaf('c', 1), Leaf('a', 2))))
+  }
+
   test("string2chars(\"hello, world\")") {
     assert(string2Chars("hello, world") === List('h', 'e', 'l', 'l', 'o', ',', ' ', 'w', 'o', 'r', 'l', 'd'))
   }
@@ -44,12 +56,14 @@ class HuffmanSuite extends FunSuite {
     assert(t.contains('e', 1))
   }
 
-  test("create code tree") {
-    assert(createCodeTree(List('a', 'a', 'b', 'c')) === Leaf('a', 2))
-  }
-
   test("makeOrderedLeafList for some frequency table") {
     assert(makeOrderedLeafList(List(('t', 2), ('e', 1), ('x', 3))) === List(Leaf('e',1), Leaf('t',2), Leaf('x',3)))
+  }
+
+  test("create code tree") {
+    new TestTrees {
+      assert(createCodeTree(List('a', 'a', 'b', 'b', 'b')) === t1)
+    }
   }
 
   test("combine of some leaf list") {
